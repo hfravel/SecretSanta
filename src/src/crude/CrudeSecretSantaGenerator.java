@@ -1,12 +1,19 @@
+package crude;
+
+import util.FailedGenerationException;
+import util.PeoplePair;
+import util.Person;
+import util.StringUtil;
+
 import java.util.Random;
 import java.util.Scanner;
 
-public class SecretSantaGenerator
+public class CrudeSecretSantaGenerator
 {
     public Person[] people;
     public boolean[][] unavailableLinks;
 
-    public SecretSantaGenerator(Person[] people)
+    public CrudeSecretSantaGenerator(Person[] people)
     {
         this.people = people;
     }
@@ -145,15 +152,24 @@ public class SecretSantaGenerator
                 continue;
             }
             else
-                people = createGroup(scan);
+                try
+                {
+                    people = createGroup(scan);
+                }
+                catch (FailedGenerationException e)
+                {
+                    System.out.println("Failed to generate Secret Santa List: ");
+                    e.printStackTrace();
+                    continue;
+                }
 
-            SecretSantaGenerator secretSantaGenerator = new SecretSantaGenerator(people);
+            CrudeSecretSantaGenerator secretSantaGenerator = new CrudeSecretSantaGenerator(people);
             PeoplePair[] peoplePairs = secretSantaGenerator.generatePairs();
             resultToString(peoplePairs);
         }
     }
 
-    public static Person[] createGroup(Scanner scan)
+    public static Person[] createGroup(Scanner scan) throws FailedGenerationException
     {
         System.out.println("Please enter group members with a space between them: ");
         String group = scan.nextLine();

@@ -1,3 +1,5 @@
+package util;
+
 public class Person
 {
     public String name;
@@ -15,5 +17,11 @@ public class Person
     {
         this.name = name;
         this.links = links;
+    }
+
+    public Person(String name, int number)
+    {
+        this.name = name;
+        this.number = number;
     }
 }
