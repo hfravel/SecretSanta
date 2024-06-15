@@ -1,8 +1,5 @@
 package hashed;
 
-import crude.Person;
-import util.FailedGenerationException;
-
 import java.util.HashMap;
 
 public class HashedPerson

@@ -1,7 +1,5 @@
 package hashed;
 
-import crude.Person;
-
 public class HashedPeoplePair
 {
     private final HashedPerson giver;

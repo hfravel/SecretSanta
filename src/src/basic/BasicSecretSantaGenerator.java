@@ -1,4 +1,4 @@
-package crude;
+package basic;
 
 import util.FailedGenerationException;
 import util.StringUtil;
@@ -6,12 +6,12 @@ import util.StringUtil;
 import java.util.Random;
 import java.util.Scanner;
 
-public class CrudeSecretSantaGenerator
+public class BasicSecretSantaGenerator
 {
     public Person[] people;
     public boolean[][] unavailableLinks;
 
-    public CrudeSecretSantaGenerator(Person[] people)
+    public BasicSecretSantaGenerator(Person[] people)
     {
         this.people = people;
     }
@@ -161,7 +161,7 @@ public class CrudeSecretSantaGenerator
                     continue;
                 }
 
-            CrudeSecretSantaGenerator secretSantaGenerator = new CrudeSecretSantaGenerator(people);
+            BasicSecretSantaGenerator secretSantaGenerator = new BasicSecretSantaGenerator(people);
             PeoplePair[] peoplePairs = secretSantaGenerator.generatePairs();
             resultToString(peoplePairs);
         }
