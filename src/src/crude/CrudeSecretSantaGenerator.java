@@ -1,8 +1,6 @@
 package crude;
 
 import util.FailedGenerationException;
-import util.PeoplePair;
-import util.Person;
 import util.StringUtil;
 
 import java.util.Random;

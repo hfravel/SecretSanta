@@ -1,21 +1,19 @@
 package hashed;
 
+import crude.Person;
 import util.FailedGenerationException;
-import util.Person;
+
+import java.util.HashMap;
 
 public class HashedPerson
 {
-    private String name;
-    private int bit;
-    private int links;
-    private int numAvailable;
+    private final String name;
+    private HashMap<String, HashedPerson> validReceivers;
 
-    public HashedPerson(String name, int bit, int numAvailable)
+    public HashedPerson(String name)
     {
         this.name = name;
-        this.bit = bit;
-        this.numAvailable = numAvailable;
-        this.links = bit;
+        validReceivers = null;
     }
 
     public String getName()
@@ -23,27 +21,23 @@ public class HashedPerson
         return name;
     }
 
-    public int getBit()
+    public void setValidReceivers(HashMap<String, HashedPerson> validReceivers)
     {
-        return bit;
+        this.validReceivers = validReceivers;
     }
 
-    public int getLinks()
+    public HashMap<String, HashedPerson> getValidReceivers()
     {
-        return links;
+        return validReceivers;
     }
 
-    public void setLinks(int bit) throws FailedGenerationException
+    public void removeReceiver(String name)
     {
-        links = links | bit;
-        numAvailable--;
-
-        if (numAvailable < 0)
-            throw new FailedGenerationException(name + " was set to " + bit + ", but should not have");
+        validReceivers.remove(name);
     }
 
-    public int getNumAvailable()
+    public String toString()
     {
-        return numAvailable;
+        return "{Name=" + name + "; Receivers=" + (validReceivers == null ? "null" : validReceivers.keySet()) + "}";
     }
 }
