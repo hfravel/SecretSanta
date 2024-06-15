@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Secret Santa</title>
+        <link rel="stylesheet" href="styles.css">
+        <script src="secretSanta.js"></script>
+    </head>
+    <body>
+        <div>
+            <h1>Secret Santa Generator</h1>
+        </div>
+        <div class="columnedWindow">
+            <button class="first button" onclick="addNewPerson()">Add Person</button>
+            <button class="second button">Run Secret Santa</button>
+        </div>
+        <div class="columnedWindow">
+            <div class = "first column">
+                <ul id="peopleList">
+                    <button class="button">Person1</button>
+                    <button class="button">Person2</button>
+                    <button class="button">Person3</button>
+                </ul>
+            </div>
+            <div class="second column">
+                <div class="columnedWindow">
+                    <h2>Person1</h2>
+                    <button class="button">Remove Person</button>
+                </div>
+                <div class="peopleDescription">
+                    <h3>Connections</h3>
+                    <table>
+                        <tr>
+                            <th>People</th>
+                            <th>Remove Connection</th>
+                        </tr>
+                        <tr>
+                            <td>Person1</td>
+                            <td><button class="button">remove</button></td>
+                        </tr>
+                        <tr>
+                            <td>Person2</td>
+                            <td><button class="button">remove</button></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="peopleDescription">
+                    <h3>Restrictions</h3>
+                    <table>
+                        <tr>
+                            <th>People</th>
+                            <th>Remove Restriction</th>
+                        </tr>
+                        <tr>
+                            <td>Person3</td>
+                            <td><button class="button">remove</button></td>
+                        </tr>
+                        <tr>
+                            <td>Person4</td>
+                            <td><button class="button">remove</button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>

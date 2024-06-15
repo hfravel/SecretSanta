@@ -1,0 +1,75 @@
+body {
+    background: chartreuse;
+}
+
+h1 {
+    color: red;
+}
+
+h2 {
+    text-decoration: underline;
+    width: 75%;
+    text-align: center;
+}
+
+h3 {
+    text-decoration: underline;
+}
+
+table {
+    width: 100%;
+}
+
+th, td {
+   border: 2px solid red;
+    text-align: center;
+ }
+
+ ul {
+    margin: 0;
+    padding: 0;
+ }
+
+.button {
+    background-color: green;
+    color: white;
+    padding: 15px 30px;
+    text-align: center;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #3e8e41
+}
+
+.button:active {
+  background-color: #3e8e41;
+  transform: translateY(2px);
+}
+
+.peopleDescription {
+    background-color: pink;
+    border: 5px solid red;
+}
+
+.columnedWindow {
+    display: flex;
+    flex-direction: row;
+}
+
+.column {
+    color: "blue";
+    overflow-y: auto;
+    border: 5px solid red;
+    height: 400px;
+}
+
+.first {
+    width: 25%;
+}
+
+.second {
+    width: 75%;
+}
