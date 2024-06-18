@@ -16,47 +16,31 @@
         <div class="columnedWindow">
             <div class = "first column">
                 <ul id="peopleList">
-                    <button class="button">Person1</button>
-                    <button class="button">Person2</button>
-                    <button class="button">Person3</button>
                 </ul>
             </div>
             <div class="second column">
                 <div class="columnedWindow">
-                    <h2>Person1</h2>
-                    <button class="button">Remove Person</button>
+                    <h2 id="personName">No Person</h2>
+                    <button class="button" onclick="removePerson()">Remove Person</button>
                 </div>
                 <div class="peopleDescription">
                     <h3>Connections</h3>
-                    <table>
-                        <tr>
-                            <th>People</th>
-                            <th>Remove Connection</th>
-                        </tr>
-                        <tr>
-                            <td>Person1</td>
-                            <td><button class="button">remove</button></td>
-                        </tr>
-                        <tr>
-                            <td>Person2</td>
-                            <td><button class="button">remove</button></td>
-                        </tr>
+                    <table id="connectionsTable">
+                        <thead>
+                            <tr>
+                                <th>People</th>
+                                <th>Remove Connection</th>
+                            </tr>
+                        </thead>
                     </table>
                 </div>
                 <div class="peopleDescription">
                     <h3>Restrictions</h3>
-                    <table>
+                    <table id="restrictionsTable">
+                        <thead>
                         <tr>
                             <th>People</th>
                             <th>Remove Restriction</th>
-                        </tr>
-                        <tr>
-                            <td>Person3</td>
-                            <td><button class="button">remove</button></td>
-                        </tr>
-                        <tr>
-                            <td>Person4</td>
-                            <td><button class="button">remove</button></td>
                         </tr>
                     </table>
                 </div>
