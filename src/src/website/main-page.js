@@ -3,8 +3,8 @@ class PersonObject
     constructor(name) 
     {
         this.name = name;
-        this.connections = new Map();
-        this.restrictions = new Map();
+        this.connections = new Set();
+        this.restrictions = new Set();
     }
 }
 
@@ -16,13 +16,28 @@ const NO_PERSON = "No People Created";
 
 const peopleMap = new Map();
 
+function initialize()
+{
+    addPerson(new PersonObject("Hayden"));
+    addPerson(new PersonObject("Maggie"));
+    addPerson(new PersonObject("John"));
+    addPerson(new PersonObject("Gary"));
+    addPerson(new PersonObject("Lynn"));
+    console.log(peopleMap.values());
+}
+
 function addNewPerson()
 {
-    let peopleButtonList = document.getElementById(PEOPLE_BUTTON_LIST);
     let newPerson = new PersonObject(window.prompt("Enter name:", ""));
+    addPerson(newPerson);
+}
+
+function addPerson(newPerson)
+{
+    let peopleButtonList = document.getElementById(PEOPLE_BUTTON_LIST);
     for (const [personName, person] of peopleMap.entries())
     {
-        newPerson.connections.set(personName, person);
+        newPerson.connections.add(personName);
     }
     addPersonToAll(newPerson);
 
@@ -49,15 +64,15 @@ function openPersonPage(openPerson)
     clearPage(openPerson.name);
 
     let connectionsTable = document.getElementById(CONNECTIONS_TABLE);
-    for (const person of openPerson.connections.values())
+    for (const personName of openPerson.connections.values())
     {
-        addRowToTable(connectionsTable, person.name);
+        addRowToTable(connectionsTable, personName);
     }
 
     let restrictionsTable = document.getElementById(RESTRICTIONS_TABLE);
-    for (const person of openPerson.restrictions.values())
+    for (const personName of openPerson.restrictions.values())
     {
-        addRowToTable(restrictionsTable, person.name);
+        addRowToTable(restrictionsTable, personName);
     }
 }
 
@@ -87,9 +102,9 @@ function addRowToTable(table, personName)
 
     let movePersonButton = document.createElement("button");
     movePersonButton.classList.add("button");
-    movePersonButton.textContent = "Move";
+    movePersonButton.textContent = "Remove";
 
-    if (table.id == RESTRICTIONS_TABLE)
+    if (table.id === RESTRICTIONS_TABLE)
         movePersonButton.addEventListener("click", moveToConnections);
     else
         movePersonButton.addEventListener("click", moveToRestrictions);
@@ -101,7 +116,7 @@ function addPersonToAll(newPerson)
 {
     for (const person of peopleMap.values())
     {
-        person.connections.set(newPerson.name, newPerson);
+        person.connections.add(newPerson.name);
     }
 }
 
@@ -115,7 +130,7 @@ function removePerson()
         let removalPersonButton = document.getElementById(removalPersonName);
         removalPersonButton.parentNode.removeChild(removalPersonButton);
 
-        if (peopleMap.size == 0)
+        if (peopleMap.size === 0)
             clearPage(NO_PERSON);
         else
             openPersonPage(peopleMap.values().next().value);
@@ -144,7 +159,7 @@ function moveToRestrictions(event)
     addRowToTable(restrictionsTable, movingPerson.name);
 
     mainPerson.connections.delete(movingPerson.name);
-    mainPerson.restrictions.set(movingPerson.name, movingPerson);
+    mainPerson.restrictions.add(movingPerson.name);
 }
 
 function moveToConnections(event)
@@ -160,5 +175,5 @@ function moveToConnections(event)
     addRowToTable(connectionsTable, movingPerson.name);
 
     mainPerson.restrictions.delete(movingPerson.name);
-    mainPerson.connections.set(movingPerson.name, movingPerson);
+    mainPerson.connections.add(movingPerson.name);
 }
