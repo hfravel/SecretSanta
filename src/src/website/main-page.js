@@ -162,9 +162,3 @@ function moveToConnections(event)
     mainPerson.restrictions.delete(movingPerson.name);
     mainPerson.connections.set(movingPerson.name, movingPerson);
 }
-
-// Start of the Secret Santa Generator Code
-function generateSecretSantaPairings()
-{
-
-}
