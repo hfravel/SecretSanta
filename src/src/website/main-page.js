@@ -12,18 +12,94 @@ const PEOPLE_BUTTON_LIST = "peopleList";
 const PERSON_NAME = "personName";
 const CONNECTIONS_TABLE = "connectionsTable";
 const RESTRICTIONS_TABLE = "restrictionsTable";
+const PEOPLE_MAP_STORAGE = "peopleMapStorage";
+const OPEN_PERSON = "openPerson";
 const NO_PERSON = "No People Created";
 
-const peopleMap = new Map();
+let peopleMap;
 
-function initialize()
+function refreshPage()
 {
-    addPerson(new PersonObject("Hayden"));
-    addPerson(new PersonObject("Maggie"));
-    addPerson(new PersonObject("John"));
-    addPerson(new PersonObject("Gary"));
-    addPerson(new PersonObject("Lynn"));
-    console.log(peopleMap.values());
+    loadLocalStorage();
+    addBackPeopleButtons();
+}
+
+function loadLocalStorage()
+{
+    peopleMap = JSON.parse(localStorage.getItem(PEOPLE_MAP_STORAGE), reviver);
+    if (!(peopleMap instanceof Map))
+        peopleMap = new Map();
+    else
+    {
+        let openPersonName = JSON.parse(localStorage.getItem(OPEN_PERSON));
+        if (openPersonName === null)
+            clearPage(NO_PERSON);
+        else
+            openPersonPage(peopleMap.get(openPersonName));
+    }
+}
+
+function saveLocalStorage(openPersonName)
+{
+    localStorage.setItem(PEOPLE_MAP_STORAGE, JSON.stringify(peopleMap, replacer));
+    localStorage.setItem(OPEN_PERSON, JSON.stringify(openPersonName));
+}
+
+function replacer(key, value) {
+    if (value instanceof Map) 
+    {
+        return {
+            dataType: "Map",
+            value: Array.from(value.entries()),
+        };
+    } 
+    else if (value instanceof Set)
+    {
+        return {
+            dataType: "Set",
+            value: Array.from(value.values()),
+        };
+    }
+    else 
+    {
+        return value;
+    }
+}
+
+function reviver(key, value) {
+    if(typeof value === 'object' && value !== null) 
+    {
+        if (value.dataType === 'Map') 
+        {
+            return new Map(value.value);
+        }
+        else if (value.dataType === 'Set')
+        {
+            return new Set(value.value);
+        }
+    }
+    return value;
+}
+
+function addBackPeopleButtons()
+{
+    for (const person of peopleMap.values())
+    {
+        createPersonButton(person.name);
+    }
+}
+
+function createPersonButton(personName)
+{
+    let peopleButtonList = document.getElementById(PEOPLE_BUTTON_LIST);
+
+    let personButton = document.createElement("button");
+    personButton.id = personName;
+    personButton.classList.add("button");
+    personButton.textContent = personName;
+    personButton.addEventListener("click", openPage);
+
+    peopleButtonList.appendChild(personButton);
 }
 
 function addNewPerson()
@@ -34,7 +110,6 @@ function addNewPerson()
 
 function addPerson(newPerson)
 {
-    let peopleButtonList = document.getElementById(PEOPLE_BUTTON_LIST);
     for (const [personName, person] of peopleMap.entries())
     {
         newPerson.connections.add(personName);
@@ -43,14 +118,10 @@ function addPerson(newPerson)
 
     peopleMap.set(newPerson.name, newPerson);
 
-    let newPersonButton = document.createElement("button");
-    newPersonButton.id = newPerson.name;
-    newPersonButton.classList.add("button");
-    newPersonButton.textContent = newPerson.name;
-    newPersonButton.addEventListener("click", openPage);
-
-    peopleButtonList.appendChild(newPersonButton);
+    createPersonButton(newPerson.name);
     openPersonPage(newPerson);
+
+    saveLocalStorage(newPerson.name);
 }
 
 function openPage(event)
@@ -74,6 +145,8 @@ function openPersonPage(openPerson)
     {
         addRowToTable(restrictionsTable, personName);
     }
+
+    saveLocalStorage(openPerson.name);
 }
 
 function clearPage(personName)
@@ -131,7 +204,10 @@ function removePerson()
         removalPersonButton.parentNode.removeChild(removalPersonButton);
 
         if (peopleMap.size === 0)
+        {
             clearPage(NO_PERSON);
+            saveLocalStorage(null);
+        }
         else
             openPersonPage(peopleMap.values().next().value);
     }
@@ -160,6 +236,8 @@ function moveToRestrictions(event)
 
     mainPerson.connections.delete(movingPerson.name);
     mainPerson.restrictions.add(movingPerson.name);
+
+    saveLocalStorage(mainPerson.name);
 }
 
 function moveToConnections(event)
@@ -176,4 +254,6 @@ function moveToConnections(event)
 
     mainPerson.restrictions.delete(movingPerson.name);
     mainPerson.connections.add(movingPerson.name);
+
+    saveLocalStorage(mainPerson.name);
 }
