@@ -24,9 +24,10 @@ function generateSecretSantaPairings()
             let matchingGroup = findMatchingGroups();
             if (matchingGroup !== null)
             {
-                console.log("Matching Group: " + matchingGroup.size);
+                console.log("Matching Group: ");
+                console.log(JSON.stringify(matchingGroup));
                 randomlyCreatePairs(matchingGroup);
-                pairingCount += matchingGroup.size;
+                pairingCount += matchingGroup.length;
             }
             else
             {
@@ -131,6 +132,8 @@ function randomlyCreatePairs(givingPeople)
     {
         let randomIndex = Math.floor(Math.random() * count);
         let giver = givingPeople[randomIndex];
+        
+        peopleMapCopy.delete(giver.name);
         secretSantaPairing[secretSantaPairing.length] = new PeoplePair(giver.name, receiverName);
 
         removePersonFromAllReceivingGroups(receiverName);
