@@ -24,26 +24,22 @@ function generateSecretSantaPairings()
             let matchingGroup = findMatchingGroups();
             if (matchingGroup != null)
             {
-                console.log('Matching Group: ');
-                console.log(JSON.stringify(matchingGroup));
                 randomlyCreatePairs(matchingGroup);
                 pairingCount += matchingGroup.length;
             }
             else
             {
-                console.log('Single Person');
                 pairFirstPerson();
                 pairingCount++;
             }
         }
-
-        console.log(secretSantaPairing);
-        // Show value of secretSantaPairing somehow
     }
     catch (error)
     {
         console.log(error);
     }
+
+    openForm();
 }
 
 function copyPeopleMap()
@@ -179,4 +175,28 @@ function chooseRandomPerson(connections)
 
     return null;
 
+}
+
+function openForm()
+{
+    resultsTable = document.getElementById('resultsTable');
+    let rowCount = resultsTable.rows.length;
+
+    for (let i = 0; i < rowCount; i++)
+    {
+        resultsTable.deleteRow(0);
+    }
+
+    for (const peoplePair of secretSantaPairing.values())
+    {
+        let row = resultsTable.insertRow();
+        row.insertCell(0).innerHTML = peoplePair.giver + ' &rarr; ' + peoplePair.receiver;
+    }
+
+    document.getElementById('resultsForm').style.display = 'block';
+}
+
+function closeForm()
+{
+    document.getElementById('resultsForm').style.display = 'none';
 }

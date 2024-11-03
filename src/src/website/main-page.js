@@ -207,18 +207,23 @@ function addRowToTable(table, personName)
 {
     let row = table.insertRow(-1);
     row.insertCell(0).innerHTML = personName;
-    let removeCell = row.insertCell(1);
+    let secondCell = row.insertCell(1);
 
     let movePersonButton = document.createElement('button');
     movePersonButton.classList.add('button');
-    movePersonButton.textContent = 'Remove';
 
     if (table.id === RESTRICTIONS_TABLE)
+    {
+        movePersonButton.textContent = 'Add';
         movePersonButton.addEventListener('click', moveToConnections);
+    }
     else
+    {
+        movePersonButton.textContent = 'Remove';
         movePersonButton.addEventListener('click', moveToRestrictions);
+    }
 
-    removeCell.appendChild(movePersonButton);
+    secondCell.appendChild(movePersonButton);
 }
 
 function addPersonToAll(newPerson)

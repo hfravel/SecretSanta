@@ -21,14 +21,14 @@ table {
 }
 
 th, td {
-   border: 2px solid red;
+    border: 2px solid red;
     text-align: center;
- }
+}
 
- ul {
+ul {
     margin: 0;
     padding: 0;
- }
+}
 
 .button {
     background-color: green;
@@ -72,4 +72,21 @@ th, td {
 
 .second {
     width: 75%;
+}
+
+.halfWidth {
+    width: 50%
+}
+
+/* The popup form - hidden by default */
+.form-popup {
+    display: none;
+    position: absolute;
+    top: 5%;
+    right: 5%;
+    height: 50%;
+    width: 50%;
+    border: 3px solid green;
+    z-index: 1;
+    background-color: white;
 }
