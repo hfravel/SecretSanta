@@ -60,10 +60,9 @@ ul {
 }
 
 .column {
-    color: "blue";
+    color: 'blue';
     overflow-y: auto;
     border: 5px solid red;
-    height: 400px;
 }
 
 .first {
@@ -78,10 +77,10 @@ ul {
     width: 50%
 }
 
-/* The popup form - hidden by default */
-.form-popup {
+.form {
     display: none;
     position: absolute;
+    overflow-y: auto;
     top: 5%;
     right: 5%;
     height: 50%;

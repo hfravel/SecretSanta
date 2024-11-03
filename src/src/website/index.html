@@ -1,32 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
     <head>
         <title>Secret Santa</title>
-        <link rel="stylesheet" href="styles.css">
-        <script src="main-page.js"></script>
-        <script src="secret-santa.js"></script>
+        <link rel='stylesheet' href='styles.css'>
+        <script src='main-page.js'></script>
+        <script src='secret-santa.js'></script>
     </head>
-    <body onload="refreshPage()">
+    <body onload='refreshPage()'>
         <div>
             <h1>Secret Santa Generator</h1>
         </div>
-        <div class="columnedWindow">
-            <button class="first button" onclick="addNewPerson()">Add Person</button>
-            <button class="second button" onclick="generateSecretSantaPairings()">Run Secret Santa</button>
+        <div class='columnedWindow'>
+            <button class='first button' onclick='addNewPerson()'>Add Person</button>
+            <button class='second button' onclick='generateSecretSantaPairings()'>Run Secret Santa</button>
         </div>
-        <div class="columnedWindow">
-            <div class = "first column">
-                <ul id="peopleList">
+        <div class='columnedWindow'>
+            <div class = 'first column'>
+                <ul id='peopleList'>
                 </ul>
             </div>
-            <div class="second column">
-                <div class="columnedWindow">
-                    <h2 id="personName">No Person</h2>
-                    <button class="button" onclick="removePerson()">Remove Person</button>
+            <div class='second column'>
+                <div class='columnedWindow'>
+                    <h2 id='personName'>No Person</h2>
+                    <button class='button' onclick='removePerson()'>Remove Person</button>
                 </div>
-                <div class="peopleDescription">
+                <div class='peopleDescription'>
                     <h3>Connections</h3>
-                    <table id="connectionsTable">
+                    <table id='connectionsTable'>
                         <thead>
                             <tr>
                                 <th>People</th>
@@ -35,9 +35,9 @@
                         </thead>
                     </table>
                 </div>
-                <div class="peopleDescription">
+                <div class='peopleDescription'>
                     <h3>Restrictions</h3>
-                    <table id="restrictionsTable">
+                    <table id='restrictionsTable'>
                         <thead>
                         <tr>
                             <th>People</th>
@@ -47,11 +47,11 @@
                 </div>
             </div>
         </div>
-        <div class="form-popup" id="resultsForm">
+        <div class='form' id='resultsForm'>
             <form>
                 <h1>Secret Santa Results:</h1>
-                <table id="resultsTable"></table>
-                <button type="button" class="button" onclick="closeForm()">Close</button>
+                <table id='resultsTable'></table>
+                <button type='button' class='button' onclick='closeForm()'>Close</button>
             </form>
         </div>
     </body>
