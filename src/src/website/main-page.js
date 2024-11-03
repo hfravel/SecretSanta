@@ -14,7 +14,9 @@ const CONNECTIONS_TABLE = 'connectionsTable';
 const RESTRICTIONS_TABLE = 'restrictionsTable';
 const PEOPLE_MAP_STORAGE = 'peopleMapStorage';
 const OPEN_PERSON = 'openPerson';
+const LAST_SAVE = 'mostRecentSave';
 const NO_PERSON = 'No People Created';
+const ONE_HOUR = 3600000;
 
 let peopleMap;
 
@@ -26,6 +28,7 @@ function refreshPage()
 
 function loadLocalStorage()
 {
+    clearStorageIfExpired();
     peopleMap = JSON.parse(localStorage.getItem(PEOPLE_MAP_STORAGE), reviver);
     if (!(peopleMap instanceof Map))
         peopleMap = new Map();
@@ -39,10 +42,21 @@ function loadLocalStorage()
     }
 }
 
+function clearStorageIfExpired()
+{
+    lastSave = localStorage.getItem(LAST_SAVE);
+
+    if (!!lastSave && (Date.now() - lastSave) > ONE_HOUR)
+    {
+        localStorage.clear();
+    }
+}
+
 function saveLocalStorage(openPersonName)
 {
     localStorage.setItem(PEOPLE_MAP_STORAGE, JSON.stringify(peopleMap, replacer));
     localStorage.setItem(OPEN_PERSON, JSON.stringify(openPersonName));
+    localStorage.setItem(LAST_SAVE, Date.now());
 }
 
 function replacer(key, value) {
