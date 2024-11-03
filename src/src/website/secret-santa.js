@@ -22,16 +22,16 @@ function generateSecretSantaPairings()
         while (pairingCount < numPeople)
         {
             let matchingGroup = findMatchingGroups();
-            if (matchingGroup !== null)
+            if (matchingGroup != null)
             {
-                console.log("Matching Group: ");
+                console.log('Matching Group: ');
                 console.log(JSON.stringify(matchingGroup));
                 randomlyCreatePairs(matchingGroup);
                 pairingCount += matchingGroup.length;
             }
             else
             {
-                console.log("Single Person");
+                console.log('Single Person');
                 pairFirstPerson();
                 pairingCount++;
             }
@@ -85,7 +85,7 @@ function findMatchingGroups()
             if (person1 !== person2 && equalSets(person1.connections, person2.connections))
             {
                 if (peopleCount === person1.connections.size)
-                    throw "Cannot create Secret Santa, too few connections";
+                    throw 'Cannot create Secret Santa, too few connections';
 
                 peopleWithTheSameConnections[peopleCount] = person2;
                 peopleCount++;
@@ -126,7 +126,7 @@ function randomlyCreatePairs(givingPeople)
     let count = givingPeople.length;
 
     if (count !== validConnections.size)
-        throw "Amount of Givers (" + count + ") vs Receivers (" + validConnections.size + ") does not match";
+        throw 'Amount of Givers (' + count + ') vs Receivers (' + validConnections.size + ') does not match';
 
     for (const receiverName of validConnections.values())
     {
@@ -159,8 +159,8 @@ function pairFirstPerson()
     peopleMapCopy.delete(giver.name);
 
     let receiverName = chooseRandomPerson(giver.connections);
-    if (receiverName === null)
-        throw "Unable to find a receiver for " + giver.name;
+    if (receiverName == null)
+        throw 'Unable to find a receiver for ' + giver.name;
     removePersonFromAllReceivingGroups(receiverName);
 
     secretSantaPairing[secretSantaPairing.length] = new PeoplePair(giver.name, receiverName);

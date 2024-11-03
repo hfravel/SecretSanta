@@ -8,13 +8,13 @@ class PersonObject
     }
 }
 
-const PEOPLE_BUTTON_LIST = "peopleList";
-const PERSON_NAME = "personName";
-const CONNECTIONS_TABLE = "connectionsTable";
-const RESTRICTIONS_TABLE = "restrictionsTable";
-const PEOPLE_MAP_STORAGE = "peopleMapStorage";
-const OPEN_PERSON = "openPerson";
-const NO_PERSON = "No People Created";
+const PEOPLE_BUTTON_LIST = 'peopleList';
+const PERSON_NAME = 'personName';
+const CONNECTIONS_TABLE = 'connectionsTable';
+const RESTRICTIONS_TABLE = 'restrictionsTable';
+const PEOPLE_MAP_STORAGE = 'peopleMapStorage';
+const OPEN_PERSON = 'openPerson';
+const NO_PERSON = 'No People Created';
 
 let peopleMap;
 
@@ -32,7 +32,7 @@ function loadLocalStorage()
     else
     {
         let openPersonName = JSON.parse(localStorage.getItem(OPEN_PERSON));
-        if (openPersonName === null)
+        if (openPersonName == null)
             clearPage(NO_PERSON);
         else
             openPersonPage(peopleMap.get(openPersonName));
@@ -49,14 +49,14 @@ function replacer(key, value) {
     if (value instanceof Map) 
     {
         return {
-            dataType: "Map",
+            dataType: 'Map',
             value: Array.from(value.entries()),
         };
     } 
     else if (value instanceof Set)
     {
         return {
-            dataType: "Set",
+            dataType: 'Set',
             value: Array.from(value.values()),
         };
     }
@@ -67,7 +67,7 @@ function replacer(key, value) {
 }
 
 function reviver(key, value) {
-    if(typeof value === 'object' && value !== null) 
+    if(typeof value === 'object' && value != null) 
     {
         if (value.dataType === 'Map') 
         {
@@ -93,19 +93,41 @@ function createPersonButton(personName)
 {
     let peopleButtonList = document.getElementById(PEOPLE_BUTTON_LIST);
 
-    let personButton = document.createElement("button");
+    let personButton = document.createElement('button');
     personButton.id = personName;
-    personButton.classList.add("button");
+    personButton.classList.add('button');
     personButton.textContent = personName;
-    personButton.addEventListener("click", openPage);
+    personButton.addEventListener('click', openPage);
 
     peopleButtonList.appendChild(personButton);
 }
 
 function addNewPerson()
 {
-    let newPerson = new PersonObject(window.prompt("Enter name:", ""));
-    addPerson(newPerson);
+    let promptMessage = 'Enter name:';
+    let retry = true;
+
+    while (retry)
+    {
+        let personName = window.prompt(promptMessage, '');
+        if (personName == null)
+        {
+            retry = false;
+        }
+        else if (personName === '')
+        {
+            promptMessage = 'Name cannot be empty. Hit Cancel or Enter new Name:';
+        }
+        else if (peopleMap.get(personName) != null)
+        {
+            promptMessage = 'Name already exists. Enter new Name:';
+        }
+        else
+        {
+            retry = false;
+            addPerson(new PersonObject(personName));
+        }
+    }
 }
 
 function addPerson(newPerson)
@@ -173,14 +195,14 @@ function addRowToTable(table, personName)
     row.insertCell(0).innerHTML = personName;
     let removeCell = row.insertCell(1);
 
-    let movePersonButton = document.createElement("button");
-    movePersonButton.classList.add("button");
-    movePersonButton.textContent = "Remove";
+    let movePersonButton = document.createElement('button');
+    movePersonButton.classList.add('button');
+    movePersonButton.textContent = 'Remove';
 
     if (table.id === RESTRICTIONS_TABLE)
-        movePersonButton.addEventListener("click", moveToConnections);
+        movePersonButton.addEventListener('click', moveToConnections);
     else
-        movePersonButton.addEventListener("click", moveToRestrictions);
+        movePersonButton.addEventListener('click', moveToRestrictions);
 
     removeCell.appendChild(movePersonButton);
 }
