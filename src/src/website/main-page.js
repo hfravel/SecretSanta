@@ -4,14 +4,12 @@ class PersonObject
     {
         this.name = name;
         this.connections = new Set();
-        this.restrictions = new Set();
     }
 }
 
 const PEOPLE_BUTTON_LIST = 'peopleList';
 const PERSON_NAME = 'personName';
 const CONNECTIONS_TABLE = 'connectionsTable';
-const RESTRICTIONS_TABLE = 'restrictionsTable';
 const PEOPLE_MAP_STORAGE = 'peopleMapStorage';
 const OPEN_PERSON = 'openPerson';
 const LAST_SAVE = 'mostRecentSave';
@@ -109,7 +107,7 @@ function createPersonButton(personName)
 
     let personButton = document.createElement('button');
     personButton.id = personName;
-    personButton.classList.add('button');
+    personButton.classList.add('green-button');
     personButton.textContent = personName;
     personButton.addEventListener('click', openPage);
 
@@ -170,16 +168,12 @@ function openPersonPage(openPerson)
 {
     clearPage(openPerson.name);
 
-    let connectionsTable = document.getElementById(CONNECTIONS_TABLE);
-    for (const personName of openPerson.connections.values())
+    for (const personName of peopleMap.keys())
     {
-        addRowToTable(connectionsTable, personName);
-    }
-
-    let restrictionsTable = document.getElementById(RESTRICTIONS_TABLE);
-    for (const personName of openPerson.restrictions.values())
-    {
-        addRowToTable(restrictionsTable, personName);
+        if (personName !== openPerson.name)
+        {
+            addRowToTable(personName, openPerson.connections.has(personName) );
+        }
     }
 
     saveLocalStorage(openPerson.name);
@@ -189,7 +183,6 @@ function clearPage(personName)
 {
     document.getElementById(PERSON_NAME).innerHTML = personName;
     removeTableRows(CONNECTIONS_TABLE);
-    removeTableRows(RESTRICTIONS_TABLE);
 }
 
 function removeTableRows(tableName)
@@ -203,27 +196,24 @@ function removeTableRows(tableName)
     }
 }
 
-function addRowToTable(table, personName)
+function addRowToTable(personName, allowed)
 {
-    let row = table.insertRow(-1);
+    let row = document.getElementById(CONNECTIONS_TABLE).insertRow(-1);
     row.insertCell(0).innerHTML = personName;
     let secondCell = row.insertCell(1);
 
-    let movePersonButton = document.createElement('button');
-    movePersonButton.classList.add('button');
+    addExclusionButton(secondCell, allowed);
+}
 
-    if (table.id === RESTRICTIONS_TABLE)
-    {
-        movePersonButton.textContent = 'Add';
-        movePersonButton.addEventListener('click', moveToConnections);
-    }
-    else
-    {
-        movePersonButton.textContent = 'Remove';
-        movePersonButton.addEventListener('click', moveToRestrictions);
-    }
+function addExclusionButton(secondCell, allowed)
+{
+    let exclusionButton = document.createElement('button');
 
-    secondCell.appendChild(movePersonButton);
+    exclusionButton.classList.add( allowed ? 'green-button' : 'red-button' );
+    exclusionButton.textContent = allowed ? 'Included' : 'Excluded';
+    exclusionButton.addEventListener('click', allowed ? setToExclude : setToInclude);
+
+    secondCell.appendChild(exclusionButton);
 }
 
 function addPersonToAll(newPerson)
@@ -259,41 +249,40 @@ function removePersonFromAll(removalPersonName)
     for (const person of peopleMap.values())
     {
         person.connections.delete(removalPersonName);
-        person.restrictions.delete(removalPersonName);
     }
 }
 
-function moveToRestrictions(event)
+function setToExclude(event)
 {
     let mainPerson = peopleMap.get(document.getElementById(PERSON_NAME).innerHTML);
     let tableRow = event.target.parentNode.parentNode.rowIndex;
 
     let connectionsTable = document.getElementById(CONNECTIONS_TABLE);
-    let restrictionsTable = document.getElementById(RESTRICTIONS_TABLE);
 
     let movingPerson = peopleMap.get(connectionsTable.rows[tableRow].cells[0].innerHTML);
-    connectionsTable.deleteRow(tableRow);
-    addRowToTable(restrictionsTable, movingPerson.name);
+//    connectionsTable.deleteRow(tableRow);
+//    addRowToTable(movingPerson.name, false);
+    connectionsTable.rows[tableRow].deleteCell(1);
+    addExclusionButton(connectionsTable.rows[tableRow].insertCell(1), false);
 
     mainPerson.connections.delete(movingPerson.name);
-    mainPerson.restrictions.add(movingPerson.name);
 
     saveLocalStorage(mainPerson.name);
 }
 
-function moveToConnections(event)
+function setToInclude(event)
 {
     let mainPerson = peopleMap.get(document.getElementById(PERSON_NAME).innerHTML);
     let tableRow = event.target.parentNode.parentNode.rowIndex;
 
     let connectionsTable = document.getElementById(CONNECTIONS_TABLE);
-    let restrictionsTable = document.getElementById(RESTRICTIONS_TABLE);
 
-    let movingPerson = peopleMap.get(restrictionsTable.rows[tableRow].cells[0].innerHTML);
-    restrictionsTable.deleteRow(tableRow);
-    addRowToTable(connectionsTable, movingPerson.name);
+    let movingPerson = peopleMap.get(connectionsTable.rows[tableRow].cells[0].innerHTML);
+//    connectionsTable.deleteRow(tableRow);
+//    addRowToTable(movingPerson.name, true);
+    connectionsTable.rows[tableRow].deleteCell(1);
+    addExclusionButton(connectionsTable.rows[tableRow].insertCell(1), true);
 
-    mainPerson.restrictions.delete(movingPerson.name);
     mainPerson.connections.add(movingPerson.name);
 
     saveLocalStorage(mainPerson.name);

@@ -11,8 +11,8 @@
             <h1>Secret Santa Generator</h1>
         </div>
         <div class='columnedWindow'>
-            <button class='first button' onclick='addNewPerson()'>Add Person</button>
-            <button class='second button' onclick='generateSecretSantaPairings()'>Run Secret Santa</button>
+            <button class='first green-button' onclick='addNewPerson()'>Add Person</button>
+            <button class='second green-button' onclick='generateSecretSantaPairings()'>Run Secret Santa</button>
         </div>
         <div class='columnedWindow'>
             <div class = 'first column'>
@@ -22,27 +22,17 @@
             <div class='second column'>
                 <div class='columnedWindow'>
                     <h2 id='personName'>No Person</h2>
-                    <button class='button' onclick='removePerson()'>Remove Person</button>
+                    <button class='green-button' onclick='removePerson()'>Remove Person</button>
                 </div>
                 <div class='peopleDescription'>
-                    <h3>Connections</h3>
+                    <h3>Possible Recipients</h3>
                     <table id='connectionsTable'>
                         <thead>
                             <tr>
-                                <th>People</th>
-                                <th>Remove Connection</th>
+                                <th>Person</th>
+                                <th>Included/Excluded</th>
                             </tr>
                         </thead>
-                    </table>
-                </div>
-                <div class='peopleDescription'>
-                    <h3>Restrictions</h3>
-                    <table id='restrictionsTable'>
-                        <thead>
-                        <tr>
-                            <th>People</th>
-                            <th>Remove Restriction</th>
-                        </tr>
                     </table>
                 </div>
             </div>
@@ -51,7 +41,7 @@
             <form>
                 <h1>Secret Santa Results:</h1>
                 <table id='resultsTable'></table>
-                <button type='button' class='button' onclick='closeForm()'>Close</button>
+                <button type='button' class='green-button' onclick='closeForm()'>Close</button>
             </form>
         </div>
     </body>

@@ -30,7 +30,7 @@ ul {
     padding: 0;
 }
 
-.button {
+.green-button {
     background-color: green;
     color: white;
     padding: 15px 30px;
@@ -40,15 +40,33 @@ ul {
     cursor: pointer;
 }
 
-.button:hover {
-    background-color: #3e8e41
+.green-button:hover {
+    background-color: #3e8e41;
 }
 
-.button:active {
-  background-color: #3e8e41;
-  transform: translateY(2px);
+.green-button:active {
+    background-color: #3e8e41;
+    transform: translateY(2px);
 }
 
+.red-button {
+    background-color: red;
+    color: white;
+    padding: 15px 30px;
+    text-align: center;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.red-button:hover {
+    background-color: #d32f2f;
+}
+
+.red-button:active {
+    background-color: #d32f2f;
+    transform: translateY(2px);
+}
 .peopleDescription {
     background-color: pink;
     border: 5px solid red;
